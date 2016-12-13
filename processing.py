@@ -1,11 +1,12 @@
-import csv, pandas as pd, itertools, os
-import matplotlib, matplotlib.pyplot as plt, matplotlib.colors
-
+import matplotlib
 matplotlib.use('Agg')
+
+import csv, pandas as pd, itertools, os
+import matplotlib.pyplot as plt, matplotlib.colors
 
 tests = ['seqread', 'seqwrite', 'randread', 'randwrite', '70mix-read', '70mix-write']
 metrics = [
-    ('bw.bw', 'bw', 'KB/s', 'bandwidth'), 
+    ('bw.bw', 'bw', 'KB/s', 'bandwidth'),
     ('iops.iops', 'iops', 'op/s', 'IOPS'),
     ('lat.lat', 'lat', 'usec', 'latency'),
 ]
@@ -40,10 +41,10 @@ def plot(ds, fs, metric='bw', unit='KB/s', title=None):
         plt.show()
     else:
         plt.figure(figsize=(10,6), dpi=80)
-        
+
         if title:
             plt.title(title)
-        
+
         pointsize = 3.0 if len(ds[metric]) < 1000 else 0.2
 
         avg = ds[metric].mean()
@@ -55,7 +56,7 @@ def plot(ds, fs, metric='bw', unit='KB/s', title=None):
 
         plt.xlim(ds.index.min(), ds.index.max())
         plt.ylim(0, ds[metric].quantile(0.99))
-    
+
         plt.figtext(0, 0, "{} mean: {:.3f} {unit}, stddev: {:.3f} {unit}".format(fs, ds[metric].mean(), ds[metric].std(), unit=unit))
         plt.show()
 
