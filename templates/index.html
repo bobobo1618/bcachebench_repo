@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bcachefs Benchmark Server</title>
+</head>
+<body>
+    <h1>BTRFS benchmarks</h1>
+    <div>
+        <form action="/submit" method="POST" enctype="multipart/form-data">
+            <label>Submit benchmark (.zip): </label>
+            <input type="file" name="benchfile"></input>
+            <button type="submit">Submit</button>
+        </form> 
+    </div>
+    <div>
+        <table>
+            <thead>
+                <th>Date</th>
+                <th>Commit</th>
+                <th>Filesystems</th>
+                <th>Disk Model</th>
+            </thead>
+            <tbody>
+                {% for benchgroup in benchgroups %}
+                <tr>
+                    <td><a href="/view/{{benchgroup.id}}">{{benchgroup.date}}</a></td>
+                    <td>{{benchgroup.bcache_commit}}</td>
+                    <td>{% for fs, fsid in benchgroup.filesystems %}<a href="/view/bench/{{fsid}}">{{fs}}</a> {% endfor %}</td>
+                    <td>{{benchgroup.disk_model}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

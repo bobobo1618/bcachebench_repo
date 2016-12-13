@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bcache benchmark group {{bg.id}}</title>
+</head>
+<body>
+    <h1>Bcache benchmark group {{bg.id}}</h1>
+    <p>Date: {{bg.date}}</p>
+    <p>Disk: {{bg.disk_model}}</p>
+    <p>Fdisk: {{bg.fdisk}}</p>
+    <div>
+        {% for b in bg.benchmarks %}
+        <div>
+            <h2>Filesystem {{b.filesystem}}</h2>
+            <a href="/view/bench/{{b.id}}">View Single</a>
+            {% if b.bcache_commit %}
+            <p>Commit: {{b.bcache_commit}}</p>
+            {% endif %}
+            {% for test in tests %}
+                <h3>{{test}}</h3>
+                {% for metric, short, unit, title in metrics %}
+                <img src="/{{GRAPH_PREFIX}}/{{b.id}}-{{b.filesystem}}-{{test}}-{{metric}}.png" />
+                {% endfor %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

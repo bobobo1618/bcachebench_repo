@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bcache {{b.filesystem}} benchmark {{b.id}}</title>
+</head>
+<body>
+    <h1>Bcache {{b.filesystem}} benchmark {{b.id}}</h1>
+    <p>Date: {{b.benchgroup.date}}</p>
+    <p>Disk: {{b.benchgroup.disk_model}}</p>
+    <p>Fdisk: {{b.benchgroup.fdisk}}</p>
+    <div>
+        <div>
+            <h2>Filesystem {{b.filesystem}}</h2>
+            {% if b.bcache_commit %}
+            <p>Commit: {{b.bcache_commit}}</p>
+            {% endif %}
+            {% for test in tests %}
+                <h3>{{test}}</h3>
+                {% for metric, short, unit, title in metrics %}
+                <img src="/{{GRAPH_PREFIX}}/{{b.id}}-{{b.filesystem}}-{{test}}-{{metric}}.png" />
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
